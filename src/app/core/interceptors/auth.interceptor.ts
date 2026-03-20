@@ -17,7 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
-    // Clonar la request con token en caso de existir
     const authReq = token
       ? req.clone({
           setHeaders: {
@@ -28,7 +27,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((err: HttpErrorResponse) => {
-        // Si el backend devuelve 401 → cerrar sesión automático
         if (err.status === 401) {
           this.auth.logout();
         }

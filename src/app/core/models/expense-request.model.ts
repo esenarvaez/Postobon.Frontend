@@ -5,7 +5,7 @@ export interface ExpenseRequest {
   value: number;
   expenseDate: string;
   requestedBy: string;
-  status: number; // RequestStatus enum
+  status: number;
   createdAtUtc: string;
   decisionAtUtc?: string | null;
   decisionBy?: string | null;

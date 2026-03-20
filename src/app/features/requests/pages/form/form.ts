@@ -27,7 +27,6 @@ export class Form implements OnInit {
   private router = inject(Router);
   private service = inject(RequestsService);
 
-  // 🔥 Esta propiedad es obligatoria para que el ternario funcione
   id?: string;
   isEdit = false;
 
