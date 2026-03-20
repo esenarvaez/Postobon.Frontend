@@ -1,0 +1,161 @@
+<!-- Título -->
+<h2 class="text-3xl font-bold mb-6 text-gray-800">Solicitudes de gasto</h2>
+
+<!-- FILTROS -->
+<form
+  [formGroup]="form"
+  (ngSubmit)="search()"
+  class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 bg-white p-6 rounded-xl shadow border border-gray-200"
+>
+  <!-- Estado -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+    <select
+      formControlName="estado"
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    >
+      <option value="">Todos</option>
+      <option value="0">Pendiente</option>
+      <option value="1">Aprobada</option>
+      <option value="2">Rechazada</option>
+    </select>
+  </div>
+
+  <!-- Categoría -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+    <input
+      formControlName="categoria"
+      placeholder="Buscar categoría"
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+  </div>
+
+  <!-- Desde -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Desde</label>
+    <input
+      type="date"
+      formControlName="fechaDesde"
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+  </div>
+
+  <!-- Hasta -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-1">Hasta</label>
+    <input
+      type="date"
+      formControlName="fechaHasta"
+      class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+    />
+  </div>
+
+  <!-- Botón buscar -->
+  <button
+    class="col-span-full w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition-all"
+  >
+    Buscar
+  </button>
+</form>
+
+<!-- Loading -->
+<ng-container *ngIf="loading">
+  <app-loading></app-loading>
+</ng-container>
+
+<!-- Empty -->
+<ng-container *ngIf="!loading && data.length === 0">
+  <app-empty-state message="No hay solicitudes"></app-empty-state>
+</ng-container>
+
+<!-- TABLA -->
+<div
+  *ngIf="!loading && data.length > 0"
+  class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden"
+>
+  <table mat-table [dataSource]="data" class="w-full">
+    <!-- CATEGORY -->
+    <ng-container matColumnDef="category">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="!py-3 !px-4 bg-gray-50 text-gray-700 font-semibold"
+      >
+        Categoría
+      </th>
+      <td mat-cell *matCellDef="let r" class="!py-3 !px-4">
+        {{ r.category }}
+      </td>
+    </ng-container>
+
+    <!-- DESCRIPTION -->
+    <ng-container matColumnDef="description">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="!py-3 !px-4 bg-gray-50 text-gray-700 font-semibold"
+      >
+        Descripción
+      </th>
+      <td mat-cell *matCellDef="let r" class="!py-3 !px-4">
+        {{ r.description }}
+      </td>
+    </ng-container>
+
+    <!-- VALUE -->
+    <ng-container matColumnDef="value">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="!py-3 !px-4 bg-gray-50 text-gray-700 font-semibold"
+      >
+        Valor
+      </th>
+      <td mat-cell *matCellDef="let r" class="!py-3 !px-4">
+        {{ r.value | currency }}
+      </td>
+    </ng-container>
+
+    <!-- STATUS -->
+    <ng-container matColumnDef="status">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="!py-3 !px-4 bg-gray-50 text-gray-700 font-semibold"
+      >
+        Estado
+      </th>
+      <td mat-cell *matCellDef="let r" class="!py-3 !px-4">
+        <span
+          class="px-3 py-1 rounded-full text-sm font-medium"
+          [ngClass]="{
+            'bg-yellow-100 text-yellow-700': r.status === 0,
+            'bg-green-100 text-green-700': r.status === 1,
+            'bg-red-100 text-red-700': r.status === 2,
+          }"
+        >
+          {{ r.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- ACTIONS -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="bg-gray-50"></th>
+      <td mat-cell *matCellDef="let r" class="!py-3 !px-4">
+        <a [routerLink]="['/requests', r.id]" class="text-blue-600 hover:underline font-medium">
+          Ver
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="hover:bg-gray-50 transition"
+    ></tr>
+  </table>
+</div>

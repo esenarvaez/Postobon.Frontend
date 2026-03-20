@@ -1,0 +1,33 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  padding: 16px;
+  text-align: center;
+
+  h3 {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
+
+.primary {
+  background-color: #e3f2fd;
+}
+.warning {
+  background-color: #fff3cd;
+}
+.success {
+  background-color: #d1e7dd;
+}
+.danger {
+  background-color: #f8d7da;
+}

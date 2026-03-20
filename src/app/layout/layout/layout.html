@@ -1,0 +1,21 @@
+<mat-sidenav-container class="h-screen">
+  <!-- SIDENAV -->
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [opened]="true"
+    class="w-64 shadow-lg bg-white border-r border-gray-200"
+  >
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
+
+  <!-- CONTENT -->
+  <mat-sidenav-content class="bg-gray-50">
+    <!-- Header con botón para abrir/cerrar -->
+    <app-header (toggleMenu)="toggleSidebar()"></app-header>
+
+    <main class="p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

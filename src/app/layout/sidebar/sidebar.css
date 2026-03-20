@@ -1,0 +1,12 @@
+a {
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-right: 12px;
+  }
+
+  &.active {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}
